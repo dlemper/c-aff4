@@ -113,7 +113,7 @@ AFF4Status AFF4Map::OpenAFF4Map(
     const auto n = map_stream->Size() / sizeof(BinaryRange);
 
     // Ensure the Range type hasn't added any extra data members
-    static_assert(sizeof(BinaryRange) == sizeof(Range), 
+    static_assert(sizeof(BinaryRange) == sizeof(Range),
                   "Range has been extended and must be converted here");
     auto buffer = std::unique_ptr<Range[]>{new Range[n]};
 
@@ -524,8 +524,11 @@ AFF4Status AFF4Map::Flush() {
 void AFF4Map::Dump() {
     for (auto it : map) {
         resolver->logger->info("Key: {}  map_offset={:x} target_offset={:x} length={:x} target_id={} ",
-                               it.first, it.second.map_offset, it.second.target_offset,
-                               it.second.length, it.second.target_id);
+                               it.first,
+                               static_cast<unsigned long>(it.second.map_offset),
+                               static_cast<unsigned long>(it.second.target_offset),
+                               static_cast<unsigned long>(it.second.length),
+                               static_cast<unsigned long>(it.second.target_id));
     }
 }
 

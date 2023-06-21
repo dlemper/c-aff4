@@ -272,7 +272,7 @@ private:
         // compression URN.
         default:
             resolver->logger->critical("Unexpected compression type set {}",
-                                       compression);
+                                       static_cast<unsigned int>(compression));
             return NOT_IMPLEMENTED;
         }
 

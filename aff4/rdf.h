@@ -20,6 +20,7 @@ specific language governing permissions and limitations under the License.
 #include <spdlog/fmt/ostr.h>
 #include <string>
 #include <string>
+#include <fmt/ostream.h>
 
 // #include "aff4/config.h"
 #include "aff4/aff4_errors.h"
@@ -329,6 +330,11 @@ class URN: public XSDString {
 };
 
 } // namespace aff4
+
+template <typename T>
+struct fmt::formatter<T,
+    std::enable_if_t<std::is_base_of<aff4::RDFValue, T>::value, char>>
+: ostream_formatter {};
 
 // custom specialization of std::hash injected into std namespace.
 namespace std {

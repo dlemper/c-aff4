@@ -34,9 +34,9 @@ public:
         }
 
         // populate our message struct
-        char* str = new char[msg.raw.size()+1];
-        std::strncpy(str, msg.raw.data(), msg.raw.size());
-        str[msg.raw.size()] = '\0';
+        char* str = new char[msg.payload.size()+1];
+        std::strncpy(str, msg.payload.data(), msg.payload.size());
+        str[msg.payload.size()] = '\0';
 
         AFF4_Message* m = new AFF4_Message{msg.level, str, nullptr};
 
@@ -76,12 +76,15 @@ public:
     }
 
     void flush() override {}
+
+    void set_pattern(const std::string &) override {};
+    void set_formatter(std::unique_ptr<spdlog::formatter>) override {};
 };
 
 
 static std::shared_ptr<spdlog::logger> setup_c_api_logger() {
     spdlog::drop(aff4::LOGGER);
-    auto logger = spdlog::create(aff4::LOGGER, std::make_shared<LogSink>());
+    auto logger = spdlog::create<LogSink>(aff4::LOGGER);
     logger->set_level(spdlog::level::err);
     return logger;
 }

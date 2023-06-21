@@ -26,6 +26,8 @@ specific language governing permissions and limitations under the License.
 #include "aff4/aff4_io.h"
 #include "aff4/libaff4.h"
 #include "aff4/aff4_directory.h"
+#include "spdlog/sinks/stdout_color_sinks.h"
+#include "spdlog/sinks/stdout_sinks.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -11,6 +11,7 @@
 #include <time.h>
 #include <memory>
 #include "spdlog/spdlog.h"
+#include "spdlog/sinks/basic_file_sink.h"
 
 namespace aff4 {
 
@@ -182,7 +183,7 @@ AFF4Status BasicImager::handle_logging() {
     if (Get("logfile")->isSet()) {
         std::vector<spdlog::sink_ptr> sinks = resolver.logger->sinks();
 
-        auto new_sink = std::make_shared<spdlog::sinks::simple_file_sink_mt>(
+        auto new_sink = std::make_shared<spdlog::sinks::basic_file_sink_mt>(
             GetArg<TCLAP::ValueArg<std::string>>(
                 "logfile")->getValue());
         sinks.push_back(new_sink);

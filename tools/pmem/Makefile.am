@@ -4,7 +4,7 @@
 ACLOCAL_AMFLAGS = -I m4
 
 # This is so we can #include <package/foo>
-AM_CPPFLAGS = -I$(top_srcdir) -DHAVE_SSTREAM -I$(top_srcdir)/../osx/
+AM_CPPFLAGS = -I$(top_srcdir) -DHAVE_SSTREAM -I$(top_srcdir)/../osx/ ${SPDLOG_CFLAGS}
 
 # On windows we need to specify this to avoid a bug in gcc
 # (https://gcc.gnu.org/bugzilla/show_bug.cgi?id=52991)
@@ -35,17 +35,17 @@ if WINDOWS
 bin_PROGRAMS = winpmem
 
 winpmem_LDFLAGS = $(STATIC_LINKERLDFLAGS)
-winpmem_CXXFLAGS = -std=c++11 -Wall
+winpmem_CXXFLAGS = -std=c++14 -Wall
 winpmem_SOURCES = pmem_imager.cc win_pmem.cc resources/winpmem/resources.cc
-winpmem_LDADD = -lrpcrt4 -lshlwapi $(top_srcdir)/aff4/libaff4.la -lyaml-cpp
+winpmem_LDADD = -lrpcrt4 -lshlwapi $(top_srcdir)/aff4/libaff4.la -lyaml-cpp ${SPDLOG_LIBS}
 endif
 
 if LINUX
 bin_PROGRAMS = linpmem
 linpmem_LDFLAGS = $(STATIC_LINKERLDFLAGS)
-linpmem_CXXFLAGS = -std=c++11 -Wall
+linpmem_CXXFLAGS = -std=c++14 -Wall
 linpmem_SOURCES = pmem_imager.cc linux_pmem.cc
-linpmem_LDADD = $(top_srcdir)/aff4/libaff4.la
+linpmem_LDADD = $(top_srcdir)/aff4/libaff4.la ${SPDLOG_LIBS}
 all-local: linpmem
 endif
 
@@ -53,9 +53,9 @@ if OSX
 bin_PROGRAMS = osxpmem
 
 osxpmem_LDFLAGS = $(STATIC_LINKERLDFLAGS)
-osxpmem_CXXFLAGS = -std=c++11 -Wall
+osxpmem_CXXFLAGS = -std=c++14 -Wall
 osxpmem_SOURCES = pmem_imager.cc osxpmem.cc
-osxpmem_LDADD = $(top_srcdir)/aff4/libaff4.la -lyaml-cpp
+osxpmem_LDADD = $(top_srcdir)/aff4/libaff4.la -lyaml-cpp ${SPDLOG_LIBS}
 
 # In order to build a deployable bundle we must have all the libraries
 # installed on the system first.
