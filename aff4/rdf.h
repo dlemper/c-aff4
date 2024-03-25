@@ -333,7 +333,7 @@ class URN: public XSDString {
 
 template <typename T>
 struct fmt::formatter<T,
-    std::enable_if_t<std::is_base_of<aff4::RDFValue, T>::value, char>>
+    fmt::enable_if_t<std::is_base_of<aff4::RDFValue, T>::value, char>>
 : ostream_formatter {};
 
 // custom specialization of std::hash injected into std namespace.
