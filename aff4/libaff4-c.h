@@ -40,7 +40,7 @@ const char* AFF4_version();
  * C API MUST be freed by AFF4_free_messages().
  */
 typedef struct AFF4_Message {
-    unsigned int level;
+    spdlog::level::level_enum level;
     char* message;
     struct AFF4_Message* next;
 } AFF4_Message;
